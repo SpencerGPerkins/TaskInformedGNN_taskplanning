@@ -64,19 +64,17 @@ def run_inference():
 
         predicted_wire = wire_logits.argmax(dim=0).cpu().numpy().tolist()
         predicted_action = action_logits.argmax(dim=1).cpu().numpy().tolist()
-        global_pred_wire = wire_map[predicted_wire]["global_id"]
+
 
         data_saver["predicted_action"] = [possible_actions[predicted_action[-1]]]
         data_saver["previous_actions"].append(possible_actions[predicted_action[-1]])
         print(f"Predicted Wire Index: {predicted_wire}")
-        print(f"Global predicted wire: {global_pred_wire}: coords: {wire_map[predicted_wire]['coordinates']}")
         print(f"Predicted Action: {possible_actions[predicted_action[0]]}")
 
-sample_label = "../task_plan/working_dir/dataset/generated_synthetic_dataset_0714/labels/sample_1171.json"
+sample_label = "../task_plan/working_dir/dataset/generated_synthetic_dataset_0714/labels/sample_500.json"
 
 with open(sample_label, "r") as label_read:
     file = json.load(label_read)
-print(file)
 run_inference()
 print(f"Action Label: {file['correct_action']}")
 print(f"GLOBAL Wire ID: {file['target_wire']['ID']}")
